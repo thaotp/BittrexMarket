@@ -10,7 +10,9 @@ module Bot
         result = "*1* (#{up_match.split('-')[1]}) is *#{response.last}* (#{up_match.split('-')[0]})"
         client.say(channel: data.channel, text: result)
       else
-        client.say(channel: data.channel, text: 'Not Found')
+        if(data.text.include?('-'))
+          client.say(channel: data.channel, text: 'Not Found')
+        end
       end
     end
 
