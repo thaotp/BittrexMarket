@@ -4,6 +4,12 @@ module Bot
   class SlackBot < SlackRubyBot::Bot
 
     match /^[^\-]*/ do |client, data, match|
+
+      if ENV['MAINTAIN_MODE'] && data.text.include?('-')
+        client.say(channel: data.channel, text: 'Bot server is being maintained. Please wait a minute ... ')
+        return true
+      end
+
       up_match = data.text.upcase
       if MARKETS.include?(up_match)
         response = Bittrex::Quote.current(up_match)
